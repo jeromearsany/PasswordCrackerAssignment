@@ -5,21 +5,20 @@ import java.util.Scanner;
 
 public class PasswordCracker {
 
-    public static void main(String[] args) { // Fixed 'Stringargs' to 'String[] args'
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
 
-        String correctPassword = "PaSsW"; // Hardcoded correct password (as per task)
-        String dictionaryFilePath = "/path/to/your/dictionary.txt"; // Replace with the actual path
+        String correctPassword = "PaSsW";
+        String dictionaryFilePath = "/path/to/your/dictionary.txt";
 
-        if (dictionaryAttack(correctPassword, dictionaryFilePath)) { // Removed unnecessary 'username' parameter
+        if (dictionaryAttack(correctPassword, dictionaryFilePath)) {
             System.out.println("Login successful using dictionary attack!");
         } else {
             System.out.println("Login failed using dictionary attack. Trying brute force...");
-            bruteForceAttack(correctPassword); // Removed unnecessary 'username' parameter
-        }
+            bruteForceAttack(correctPassword);
 
         scanner.close();
     }
@@ -29,19 +28,19 @@ public class PasswordCracker {
             String password;
             while ((password = reader.readLine()) != null) {
                 if (password.equals(correctPassword)) {
-                    return true; // Password found in dictionary
+                    return true;
                 }
             }
         } catch (IOException e) {
             System.err.println("Error reading dictionary file: " + e.getMessage());
         }
-        return false; // Password not found in dictionary
+        return false;
     }
 
     public static void bruteForceAttack(String correctPassword) {
-        char[] charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray(); // Fixed 'charcharset'
+        char[] charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
         int passwordLength = 5;
-        char[] attempt = new char[passwordLength]; // Fixed 'charattempt'
+        char[] attempt = new char[passwordLength];
 
         if (bruteForceRecursive(charset, passwordLength, attempt, 0, correctPassword)) {
             System.out.println("Password cracked using brute force!");
@@ -53,9 +52,9 @@ public class PasswordCracker {
     public static boolean bruteForceRecursive(char[] charset, int passwordLength, char[] attempt, int index, String correctPassword) {
         if (index == passwordLength) {
             if (new String(attempt).equals(correctPassword)) {
-                return true; // Password found
+                return true;
             }
-            return false; // Password not found at this combination
+            return false;
         }
 
         for (char c : charset) {
@@ -64,6 +63,6 @@ public class PasswordCracker {
                 return true;
             }
         }
-        return false; // Password not found in this branch
+        return false;
     }
 }
